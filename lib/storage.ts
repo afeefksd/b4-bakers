@@ -42,7 +42,7 @@ export async function createProduct(product: Product): Promise<void> {
 export async function updateProduct(id: string, updates: Partial<Product>): Promise<void> {
   try {
     const fields: string[] = [];
-    const values: any[] = [];
+    const values: unknown[] = [];
     let paramCount = 1;
 
     if (updates.name !== undefined) {
