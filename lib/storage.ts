@@ -7,7 +7,11 @@ export async function getProducts(): Promise<Product[]> {
     const result = await query<Product>(
       'SELECT id, name, description, price, image, category, created_at as "createdAt" FROM products ORDER BY created_at DESC'
     );
-    return result.rows;
+    // Convert price from string to number (PostgreSQL DECIMAL returns as string)
+    return result.rows.map(row => ({
+      ...row,
+      price: typeof row.price === 'string' ? parseFloat(row.price) : row.price
+    }));
   } catch (error) {
     console.error('Error getting products:', error);
     return [];
@@ -20,7 +24,12 @@ export async function getProduct(id: string): Promise<Product | null> {
       'SELECT id, name, description, price, image, category, created_at as "createdAt" FROM products WHERE id = $1',
       [id]
     );
-    return result.rows[0] || null;
+    const product = result.rows[0] || null;
+    // Convert price from string to number (PostgreSQL DECIMAL returns as string)
+    if (product && typeof product.price === 'string') {
+      product.price = parseFloat(product.price);
+    }
+    return product;
   } catch (error) {
     console.error('Error getting product:', error);
     return null;
