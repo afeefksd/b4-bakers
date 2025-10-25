@@ -10,7 +10,7 @@ export default async function AdminLayout({
   const authenticated = await isAuthenticated();
 
   if (!authenticated) {
-    redirect('/admin/login');
+    redirect('/login');
   }
 
   return (
