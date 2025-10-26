@@ -120,14 +120,14 @@ export async function PUT(request: NextRequest) {
       // Insert new content
       await query(
         `INSERT INTO about_content (id, title, intro, subtitle, offerings, outro, updated_at)
-         VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+         VALUES ($1, $2, $3, $4, $5::jsonb, $6, $7)`,
         [id, title, intro, subtitle, JSON.stringify(offerings), outro, updatedAt]
       );
     } else {
       // Update existing content
       await query(
         `UPDATE about_content 
-         SET title = $2, intro = $3, subtitle = $4, offerings = $5, outro = $6, updated_at = $7
+         SET title = $2, intro = $3, subtitle = $4, offerings = $5::jsonb, outro = $6, updated_at = $7
          WHERE id = $1`,
         [id, title, intro, subtitle, JSON.stringify(offerings), outro, updatedAt]
       );
@@ -147,7 +147,10 @@ export async function PUT(request: NextRequest) {
   } catch (error) {
     console.error('Error updating about content:', error);
     return NextResponse.json(
-      { error: 'Failed to update about content' },
+      { 
+        error: 'Failed to update about content',
+        details: error instanceof Error ? error.message : 'Unknown error'
+      },
       { status: 500 }
     );
   }
