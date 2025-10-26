@@ -35,3 +35,19 @@ export interface QuoteRequest {
   items: CartItem[];
 }
 
+export interface AboutContent {
+  id: string;
+  title: string;
+  intro: string;
+  subtitle: string;
+  offerings: AboutOffering[];
+  outro: string;
+  updatedAt: number;
+}
+
+export interface AboutOffering {
+  icon: string;
+  title: string;
+  description: string;
+}
+

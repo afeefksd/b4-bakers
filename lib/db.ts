@@ -73,6 +73,19 @@ export async function initializeDatabase(): Promise<void> {
       );
     `);
 
+    // Create about_content table
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS about_content (
+        id VARCHAR(255) PRIMARY KEY,
+        title TEXT NOT NULL,
+        intro TEXT NOT NULL,
+        subtitle TEXT NOT NULL,
+        offerings JSONB NOT NULL,
+        outro TEXT NOT NULL,
+        updated_at BIGINT NOT NULL
+      );
+    `);
+
     // Create indexes for better performance
     await pool.query(`
       CREATE INDEX IF NOT EXISTS idx_products_category ON products(category);

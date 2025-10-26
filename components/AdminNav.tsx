@@ -41,6 +41,12 @@ export default function AdminNav() {
           >
             Brands
           </Link>
+          <Link 
+            href="/admin/about" 
+            className={isActive('/admin/about') ? styles.active : ''}
+          >
+            About
+          </Link>
           <Link href="/" className={styles.viewSite}>
             View Site
           </Link>

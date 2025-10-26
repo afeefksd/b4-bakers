@@ -38,7 +38,6 @@ export default function Header() {
       <div className={styles.container}>
         <Link href="/" className={styles.logo}>
           <Image src="/LOGO.png" alt="B4-Baking" width={60} height={60} />
-          <span className={styles.logoText}>B4-Baking</span>
         </Link>
 
         <button 
